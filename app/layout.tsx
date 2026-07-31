@@ -1,18 +1,12 @@
 import './globals.css';
-import { DM_Sans, Noto_Serif } from 'next/font/google';
+import { DM_Sans, Noto_Serif, Noto_Sans, Playfair_Display } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import QueryProvider from '@/providers/QueryProvider';
 
-const notoSerifHeading = Noto_Serif({
-  subsets: ['latin'],
-  variable: '--font-heading',
-});
+const playfairDisplayHeading = Playfair_Display({subsets:['latin'],variable:'--font-heading'});
 
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
+const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'});
 
 export default async function RootLayout({
   children,
@@ -23,11 +17,9 @@ export default async function RootLayout({
     <html
       lang="en"
       className={cn(
-        'h-full antialiased',
-        'font-sans',
-        dmSans.variable,
-        notoSerifHeading.variable
-      )}
+              'h-full antialiased',
+              'font-sans'
+            , "font-sans", notoSans.variable, playfairDisplayHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>

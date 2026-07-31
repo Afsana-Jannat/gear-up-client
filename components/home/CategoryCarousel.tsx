@@ -32,18 +32,18 @@ export function CategoryCarousel({ categories }: Props) {
     <div className="flex flex-col gap-10 lg:flex-row">
       {/* Left Content */}
       <div className="lg:w-[280px] lg:shrink-0">
-        <p className="text-5xl font-black uppercase leading-none tracking-tight lg:text-6xl">
-          New
+        <p className="text-3xl font-black uppercase leading-none tracking-tight lg:text-5xl">
+          OUR
           <br />
-          Arrivals
+          CATEGORIES
         </p>
 
         <div className="mt-6 h-[2px] w-10 bg-black" />
 
         <p className="mt-6 text-muted-foreground leading-7">
-          Performance you can feel.
+          Browse premium sports and
           <br />
-          Style you can wear.
+          outdoor equipment for every adventure.
         </p>
 
         <Link

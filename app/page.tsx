@@ -1,4 +1,5 @@
 import { CategoriesSection } from '@/components/home/CategoriesSection';
+import FeaturedGearSection from '@/components/home/Gear/FeaturedGearSection';
 import { HeroSection } from '@/components/home/HeroSection';
 import { Navbar } from '@/components/shared/navbar';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ export default async function HomePage() {
       <Navbar user={user}></Navbar>
       <HeroSection></HeroSection>
       <CategoriesSection></CategoriesSection>
+      <FeaturedGearSection></FeaturedGearSection>
     </main>
   );
 }
