@@ -8,11 +8,13 @@ export default async function HomePage() {
 
   console.log(user);
   return (
-    <div>
-      hello Next.js
-      <Button size={'xs'} variant={'destructive'}>
-        Click me
-      </Button>
-    </div>
+    <main>
+      <div>
+        hello Next.js
+        <Button size={'xs'} variant={'destructive'}>
+          Click me
+        </Button>
+      </div>
+    </main>
   );
 }

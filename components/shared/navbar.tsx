@@ -26,7 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { logout } from '@/service/logout';
+import { logout } from '@/service/auth/logout';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -38,24 +38,19 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    label: 'Dashboard',
-    href: '#dashboard',
+    label: 'Home',
+    href: '/',
     icon: LayoutDashboard,
   },
   {
-    label: 'Projects',
-    href: '#projects',
+    label: 'Browse Gear',
+    href: '/gear',
     icon: FolderKanban,
   },
   {
-    label: 'Team',
-    href: '#team',
+    label: 'Categories',
+    href: '/categories',
     icon: Users,
-  },
-  {
-    label: 'Analytics',
-    href: '#analytics',
-    icon: BarChart3,
   },
 ];
 
@@ -68,22 +63,17 @@ type UserMenuItem = {
 const userMenuItems: UserMenuItem[] = [
   {
     label: 'Profile',
-    href: '#profile',
+    href: '/profile',
     icon: User,
   },
   {
     label: 'Settings',
-    href: '#settings',
+    href: '/settings',
     icon: Settings,
   },
   {
-    label: 'Billing',
-    href: '#billing',
-    icon: CreditCard,
-  },
-  {
     label: 'Support',
-    href: '#support',
+    href: '/support',
     icon: LifeBuoy,
   },
 ];
@@ -111,6 +101,14 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
+  const dashboardLink =
+    user?.data?.role === 'CUSTOMER'
+      ? 'customer-dashboard'
+      : user?.data?.role === 'PROVIDER'
+        ? 'provider-dashboard'
+        : user?.data?.role === 'ADMIN'
+          ? 'admin-dashboard'
+          : '/';
   const handleUserMenuAction = async (action: string) => {
     if (action === 'logout') {
       await logout();
@@ -123,16 +121,25 @@ export function Navbar({ user }: NavbarProps) {
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
-            N
-          </span>
-
-          <span className="text-lg font-semibold">NextJs Press</span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="https://gearupkw.myshopify.com/cdn/shop/files/Gear_Up.svg?v=1716521435&width=500"
+            alt="GearUp Logo"
+            className="h-20 w-20"
+          />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 md:flex">
+          {user?.success && (
+            <Button variant="ghost" size="sm" asChild>
+              <Link href={dashboardLink}>
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Dashboard
+              </Link>
+            </Button>
+          )}
+
           {navItems.map((item) => (
             <Button key={item.label} variant="ghost" size="sm" asChild>
               <Link href={item.href}>
@@ -155,6 +162,13 @@ export function Navbar({ user }: NavbarProps) {
 
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href={dashboardLink}>
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    My Dashboard
+                  </Link>
+                </DropdownMenuItem>
+
                 {navItems.map((item) => (
                   <DropdownMenuItem key={item.label} asChild>
                     <Link href={item.href}>

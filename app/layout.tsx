@@ -2,15 +2,17 @@ import './globals.css';
 import { DM_Sans, Noto_Serif } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
-// import { Navbar } from '@/components/shared/navbar';
-// import { getMe } from '@/service/getMe';
+import QueryProvider from '@/providers/QueryProvider';
 
 const notoSerifHeading = Noto_Serif({
   subsets: ['latin'],
   variable: '--font-heading',
 });
 
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' });
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export default async function RootLayout({
   children,
@@ -28,10 +30,14 @@ export default async function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <Toaster position="top-right" richColors></Toaster>
-        {/* <Navbar></Navbar> */}
-        {children}
-        {/* footer */}
+        <QueryProvider>
+          <Toaster position="top-right" richColors />
+          {/* <Navbar /> */}
+
+          {children}
+
+          {/* Footer */}
+        </QueryProvider>
       </body>
     </html>
   );

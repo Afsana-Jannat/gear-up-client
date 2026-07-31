@@ -5,7 +5,7 @@ import { jwtUtils } from './utils/jwt';
 import { cookies } from 'next/headers';
 import { getNewAccessToken } from './service/refreshToken';
 const AUTH_ROUTES = ['/login', '/register'];
-const PUBLIC_ROUTES = ['/', '/gear', '/categories'];
+const PUBLIC_ROUTES = ['/', '/gear', '/categories', '/about', 'contact'];
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
@@ -60,8 +60,8 @@ export async function proxy(request: NextRequest) {
   }
 
   if (accessToken && AUTH_ROUTES.includes(pathname)) {
-    if (userRole === 'USER') {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+    if (userRole === 'CUSTOMER') {
+      return NextResponse.redirect(new URL('/customer-dashboard', request.url));
     } else if (userRole === 'ADMIN') {
       return NextResponse.redirect(new URL('/admin-dashboard', request.url));
     } else if (userRole === 'PROVIDER') {
@@ -80,11 +80,11 @@ export async function proxy(request: NextRequest) {
 
   // authenticated pages protection : authorization is not handle yet
   if (!accessToken && !isPublicRoute && !isAuthRoute) {
-    return NextResponse.redirect(new URL('login', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // Athorization : role based access control
-  if (pathname.startsWith('/dashboard') && userRole !== 'USER') {
+  if (pathname.startsWith('/customer-dashboard') && userRole !== 'CUSTOMER') {
     return NextResponse.redirect(new URL('/not-found', request.url));
   } else if (pathname.startsWith('/admin-dashboard') && userRole !== 'ADMIN') {
     return NextResponse.redirect(new URL('/not-found', request.url));
