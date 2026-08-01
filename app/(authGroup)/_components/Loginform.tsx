@@ -1,52 +1,3 @@
-// 'use client';
-
-// import { Button } from '@/components/ui/button';
-// import { Card } from '@/components/ui/card';
-// import { Input } from '@/components/ui/input';
-// import { loginAction } from '../_actions/authActions';
-// import { useActionState, useEffect } from 'react';
-// import { toast } from 'sonner';
-// // import { useRouter } from 'next/navigation';
-
-// const Loginform = () => {
-//   const [state, action, pending] = useActionState(loginAction, false);
-//   // const router = useRouter();
-
-//   useEffect(() => {
-//     if (!state) return;
-
-//     if (state.success) {
-//       toast.success(state.message || 'Login successfully');
-//       // router.push('/dashboard');
-//     }
-//     if (!state.success) {
-//       toast.error(state.message || 'Login Failed');
-//     }
-//   }, [state]);
-
-//   return (
-//     <form action={action} className="space-y-4">
-//       <Card className="p-5 space-y-4">
-//         <Input
-//           name="email"
-//           type="email"
-//           placeholder="Enter Your Email"
-//           required
-//         ></Input>
-//         <Input
-//           name="password"
-//           type="password"
-//           placeholder="Enter Your Password"
-//           required
-//         ></Input>
-//         <Button type="submit">{pending ? 'Submitting...' : 'Login'}</Button>
-//       </Card>
-//     </form>
-//   );
-// };
-
-// export default Loginform;
-
 'use client';
 
 import { startTransition, useActionState, useEffect } from 'react';
@@ -62,12 +13,16 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
+type Props = {
+  redirect?: string;
+};
+
 const initialState: AuthState = {
   success: false,
   message: '',
 };
 
-export default function LoginForm() {
+export default function LoginForm({ redirect }: Props) {
   const [state, formAction, pending] = useActionState(
     loginAction,
     initialState
@@ -98,6 +53,10 @@ export default function LoginForm() {
 
     formData.append('email', data.email);
     formData.append('password', data.password);
+
+    if (redirect) {
+      formData.append('redirect', redirect);
+    }
 
     startTransition(() => {
       formAction(formData);

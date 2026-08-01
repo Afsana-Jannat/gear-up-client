@@ -20,11 +20,11 @@ export function useLogin() {
           break;
 
         case 'PROVIDER':
-          router.push('/admin-dashboard');
+          router.push('/provider-dashboard');
           break;
 
         case 'ADMIN':
-          router.push('/provider-dashboard');
+          router.push('/admin-dashboard');
           break;
 
         default:

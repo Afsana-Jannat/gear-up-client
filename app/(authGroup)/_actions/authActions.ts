@@ -57,8 +57,13 @@ export const loginAction = async (
     maxAge: 60 * 60 * 24 * 7,
   });
 
+  const redirectUrl = formData.get('redirect') as string | null;
+
   const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
-  console.log(decodedToken);
+
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
 
   switch (decodedToken.role) {
     case 'CUSTOMER':

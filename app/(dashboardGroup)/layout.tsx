@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/shared/navbar';
+// import { Navbar } from '@/components/shared/navbar';
 import { getMe } from '@/service/getMe';
 import React from 'react';
 
@@ -11,7 +11,7 @@ const DashboardGroupLayout = async ({
 
   return (
     <div>
-      <Navbar user={user}></Navbar>
+      {/* <Navbar user={user}></Navbar> */}
       {children}
     </div>
   );

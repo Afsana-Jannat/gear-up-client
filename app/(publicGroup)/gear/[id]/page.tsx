@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { getSingleGear } from '@/service/gear/getSingleGear';
 import GearDetails from './_components/gearDetails';
 
@@ -10,7 +11,9 @@ export default async function GearPage({
 
   const response = await getSingleGear(id);
 
-  console.log('GEAR PAGE RESPONSE:', response);
+  const cookieStore = await cookies();
+
+  const isLoggedIn = !!cookieStore.get('accessToken');
 
   if (!response.success || !response.data) {
     return (
@@ -22,7 +25,7 @@ export default async function GearPage({
 
   return (
     <section className="container mx-auto py-16">
-      <GearDetails gear={response.data} />
+      <GearDetails gear={response.data} isLoggedIn={isLoggedIn} />
     </section>
   );
 }
