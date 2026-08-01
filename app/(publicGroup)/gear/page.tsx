@@ -5,6 +5,7 @@ import { getCategories } from '@/service/category/getCategories';
 import BrowseHeader from './_components/BrowsHeader';
 import BrowseFilterBar from './_components/BrowseFilterBar';
 import GearCard from '@/components/home/Gear/GearCard';
+import Pagination from '@/components/shared/Pagination';
 
 export default async function GearPage({
   searchParams,
@@ -13,14 +14,12 @@ export default async function GearPage({
     search?: string;
     brand?: string;
     categoryId?: string;
-
-    minPrice?: string;
-    maxPrice?: string;
-
-    page?: string;
-    limit?: string;
     sortBy?: string;
     sortOrder?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    page?: string;
+    limit?: string;
   }>;
 }) {
   const params = await searchParams;
@@ -34,7 +33,7 @@ export default async function GearPage({
 
   return (
     <section className="container mx-auto w-7xl py-14">
-      <BrowseHeader total={gears.data.length} />
+      <BrowseHeader total={gears.meta.total} />
 
       <BrowseFilterBar
         categories={categories}
@@ -51,6 +50,11 @@ export default async function GearPage({
           <GearCard key={gear.id} gear={gear} />
         ))}
       </div>
+
+      <Pagination
+        currentPage={gears.meta.page}
+        totalPage={gears.meta.totalPage}
+      />
     </section>
   );
 }
