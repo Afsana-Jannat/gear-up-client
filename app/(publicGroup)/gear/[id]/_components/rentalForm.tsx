@@ -58,27 +58,18 @@ export default function RentalForm({ gearId, pricePerDay }: Props) {
 
       const result = await createRental(gearId, startDate, endDate);
 
+      console.log(result);
+
       if (!result.success) {
         toast.error(result.message);
-
         return;
       }
 
       toast.success('Rental created successfully');
-
-      const payment = await createPayment(result.data.id);
-
-      if (!payment.success) {
-        toast.error(payment.message);
-
-        return;
-      }
-
-      window.location.href = payment.data.checkoutUrl;
-    } catch (error) {
+      router.push('/customer-dashboard/rentals');
+    } catch (err) {
+      console.error(err);
       toast.error('Something went wrong');
-    } finally {
-      setLoading(false);
     }
   };
 

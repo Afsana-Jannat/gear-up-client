@@ -24,5 +24,9 @@ export const createRental = async (
     }),
   });
 
-  return res.json();
+  const data = await res.json();
+
+  console.log('Rental API Response:', data);
+
+  return data;
 };

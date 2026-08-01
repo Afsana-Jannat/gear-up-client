@@ -12,14 +12,19 @@ export const createPayment = async (rentalOrderId: string) => {
     {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
-        Cookie: `accessToken=${accessToken}`,
       },
       body: JSON.stringify({
         rentalOrderId,
+        method: 'STRIPE',
       }),
     }
   );
 
-  return res.json();
+  const data = await res.json();
+
+  console.log('Payment Response:', data);
+
+  return data;
 };
