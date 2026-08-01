@@ -56,8 +56,8 @@ export default function EditProfileForm({ user }: Props) {
 
       toast.success('Profile updated successfully');
 
-      router.refresh();
       router.push('/customer-dashboard/profile');
+      router.refresh();
     } catch {
       toast.error('Something went wrong');
     } finally {

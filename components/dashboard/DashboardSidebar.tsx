@@ -9,13 +9,45 @@ import {
   User,
   UserPen,
   Home,
+  PlusCircle,
+  ClipboardList,
+  Wallet,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 type Props = {
   mobile?: boolean;
+  role?: 'CUSTOMER' | 'PROVIDER' | 'ADMIN';
 };
+
+const providerItems = [
+  {
+    title: 'Dashboard',
+    href: '/provider-dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    title: 'My Gears',
+    href: '/provider-dashboard/my-gears',
+    icon: Package,
+  },
+  {
+    title: 'Add Gear',
+    href: '/provider-dashboard/add-gear',
+    icon: PlusCircle,
+  },
+  {
+    title: 'Rental Requests',
+    href: '/provider-dashboard/rental-requests',
+    icon: ClipboardList,
+  },
+  {
+    title: 'Earnings',
+    href: '/provider-dashboard/earnings',
+    icon: Wallet,
+  },
+];
 
 const links = [
   {
@@ -40,12 +72,15 @@ const links = [
   },
   {
     title: 'Edit Profile',
-    href: '/customer-dashboard/edit-profile',
+    href: '/customer-dashboard/profile/edit',
     icon: UserPen,
   },
 ];
 
-export default function DashboardSidebar({ mobile = false }: Props) {
+export default function DashboardSidebar({
+  mobile = false,
+  role = 'CUSTOMER',
+}: Props) {
   const pathname = usePathname();
 
   return (

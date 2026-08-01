@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Bell, Menu } from 'lucide-react';
 import DashboardSidebar from './DashboardSidebar';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+import { UserRole } from '@/types/user';
 
 type Props = {
   title: string;
@@ -13,7 +14,7 @@ type Props = {
     name: string;
     email: string;
     avatar?: string;
-    role: string;
+    role: UserRole;
   };
 };
 
@@ -31,7 +32,7 @@ export default function DashboardHeader({ title, subtitle, user }: Props) {
             </SheetTrigger>
 
             <SheetContent side="left" className="w-72 p-0">
-              <DashboardSidebar mobile />
+              <DashboardSidebar mobile role={user.role} />
             </SheetContent>
           </Sheet>
 

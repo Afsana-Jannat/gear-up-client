@@ -14,17 +14,23 @@ export const getMe = async () => {
     };
   }
 
+  // const res = await fetch(`${process.env.BACKEND_API_URL}/api/users/me`, {
+  //   headers: {
+  //     Cookie: `accessToken=${accessToken}`,
+  //   },
+  //   cache: 'force-cache',
+  //   next: {
+  //     revalidate: 60 * 60 * 24,
+  //     tags: ['my-profile'],
+  //   },
+  // });
+
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/users/me`, {
     headers: {
       Cookie: `accessToken=${accessToken}`,
     },
-    cache: 'force-cache',
-    next: {
-      revalidate: 60 * 60 * 24,
-      tags: ['my-profile'],
-    },
+    cache: 'no-store',
   });
-
   const result = await res.json();
 
   console.log(result);
