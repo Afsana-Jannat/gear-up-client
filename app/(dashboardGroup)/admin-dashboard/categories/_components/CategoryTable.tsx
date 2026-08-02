@@ -1,13 +1,11 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Image from 'next/image';
 import { Search } from 'lucide-react';
 
 import { Category } from '@/types/category';
 
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableHeader,
@@ -66,12 +64,10 @@ export default function CategoryTable({ categories }: Props) {
             {filteredCategories.map((category) => (
               <TableRow key={category.id}>
                 <TableCell>
-                  <Image
+                  <img
                     src={category.image || 'https://placehold.co/60x60/png'}
                     alt={category.name}
-                    width={56}
-                    height={56}
-                    className="rounded-xl object-cover"
+                    className="h-14 w-14 rounded-xl object-cover"
                   />
                 </TableCell>
 
