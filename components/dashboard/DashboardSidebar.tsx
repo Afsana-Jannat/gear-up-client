@@ -12,76 +12,124 @@ import {
   PlusCircle,
   ClipboardList,
   Wallet,
+  ShieldCheck,
+  Users,
+  FolderTree,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+type Role = 'CUSTOMER' | 'PROVIDER' | 'ADMIN';
+
 type Props = {
   mobile?: boolean;
-  role?: 'CUSTOMER' | 'PROVIDER' | 'ADMIN';
+  role?: Role;
 };
 
-const providerItems = [
-  {
-    title: 'Dashboard',
-    href: '/provider-dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'My Gears',
-    href: '/provider-dashboard/my-gears',
-    icon: Package,
-  },
-  {
-    title: 'Add Gear',
-    href: '/provider-dashboard/add-gear',
-    icon: PlusCircle,
-  },
-  {
-    title: 'Rental Requests',
-    href: '/provider-dashboard/rental-requests',
-    icon: ClipboardList,
-  },
-  {
-    title: 'Earnings',
-    href: '/provider-dashboard/earnings',
-    icon: Wallet,
-  },
-];
+const sidebarItems = {
+  CUSTOMER: [
+    {
+      title: 'Dashboard',
+      href: '/customer-dashboard',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'My Rentals',
+      href: '/customer-dashboard/rentals',
+      icon: Package,
+    },
+    {
+      title: 'Payment History',
+      href: '/customer-dashboard/payments',
+      icon: CreditCard,
+    },
+    {
+      title: 'Profile',
+      href: '/customer-dashboard/profile',
+      icon: User,
+    },
+    {
+      title: 'Edit Profile',
+      href: '/customer-dashboard/profile/edit',
+      icon: UserPen,
+    },
+  ],
 
-const links = [
-  {
-    title: 'Dashboard',
-    href: '/customer-dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'My Rentals',
-    href: '/customer-dashboard/rentals',
-    icon: Package,
-  },
-  {
-    title: 'Payment History',
-    href: '/customer-dashboard/payments',
-    icon: CreditCard,
-  },
-  {
-    title: 'Profile',
-    href: '/customer-dashboard/profile',
-    icon: User,
-  },
-  {
-    title: 'Edit Profile',
-    href: '/customer-dashboard/profile/edit',
-    icon: UserPen,
-  },
-];
+  PROVIDER: [
+    {
+      title: 'Dashboard',
+      href: '/provider-dashboard',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'My Gears',
+      href: '/provider-dashboard/my-gears',
+      icon: Package,
+    },
+    {
+      title: 'Add Gear',
+      href: '/provider-dashboard/add-gear',
+      icon: PlusCircle,
+    },
+    {
+      title: 'Rental Requests',
+      href: '/provider-dashboard/rental-requests',
+      icon: ClipboardList,
+    },
+    {
+      title: 'Earnings',
+      href: '/provider-dashboard/earnings',
+      icon: Wallet,
+    },
+  ],
+
+  ADMIN: [
+    {
+      title: 'Dashboard',
+      href: '/admin-dashboard',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Users',
+      href: '/admin-dashboard/users',
+      icon: Users,
+    },
+    {
+      title: 'Categories',
+      href: '/admin-dashboard/categories',
+      icon: FolderTree,
+    },
+    {
+      title: 'Gears',
+      href: '/admin-dashboard/gears',
+      icon: Package,
+    },
+    {
+      title: 'Rentals',
+      href: '/admin-dashboard/rentals',
+      icon: ClipboardList,
+    },
+    {
+      title: 'Profile',
+      href: '/admin-dashboard/profile',
+      icon: ShieldCheck,
+    },
+  ],
+} as const;
+
+const dashboardTitles: Record<Role, string> = {
+  CUSTOMER: 'Customer Dashboard',
+  PROVIDER: 'Provider Dashboard',
+  ADMIN: 'Admin Dashboard',
+};
 
 export default function DashboardSidebar({
   mobile = false,
   role = 'CUSTOMER',
 }: Props) {
   const pathname = usePathname();
+
+  const menuItems = sidebarItems[role];
 
   return (
     <aside
@@ -90,7 +138,6 @@ export default function DashboardSidebar({
         mobile ? 'h-full' : 'sticky top-0 h-screen'
       )}
     >
-      {' '}
       {/* Logo */}
       <div className="border-b px-8 py-7">
         <Link href="/" className="flex items-center gap-3">
@@ -103,13 +150,16 @@ export default function DashboardSidebar({
           <div>
             <h2 className="text-xl font-black">GearUp</h2>
 
-            <p className="text-xs text-muted-foreground">Customer Dashboard</p>
+            <p className="text-xs text-muted-foreground">
+              {dashboardTitles[role]}
+            </p>
           </div>
         </Link>
       </div>
+
       {/* Navigation */}
       <nav className="flex-1 space-y-2 p-5">
-        {links.map((item) => {
+        {menuItems.map((item) => {
           const active =
             pathname === item.href || pathname.startsWith(item.href + '/');
 
@@ -125,33 +175,20 @@ export default function DashboardSidebar({
               )}
             >
               <item.icon className="h-5 w-5" />
-
-              {item.title}
+              <span>{item.title}</span>
             </Link>
           );
         })}
       </nav>
+
       {/* Footer */}
       <div className="border-t p-5">
         <Link
           href="/"
-          className="
-            flex
-            items-center
-            gap-3
-            rounded-2xl
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-muted-foreground
-            transition
-            hover:bg-muted
-            hover:text-foreground
-          "
+          className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground"
         >
           <Home className="h-5 w-5" />
-          Back to Website
+          <span>Back to Website</span>
         </Link>
       </div>
     </aside>
