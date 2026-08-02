@@ -8,6 +8,7 @@ import { Gear } from '@/types/gear';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
+import DeleteGearButton from './DeleteGearButton';
 
 type Props = {
   gear: Gear;
@@ -58,15 +59,13 @@ export default function GearRow({ gear }: Props) {
       {/* Actions */}
       <TableCell>
         <div className="flex justify-end gap-2">
-          <Button asChild size="icon" variant="outline">
+          <Button asChild variant="outline" size="icon">
             <Link href={`/provider-dashboard/edit-gear/${gear.id}`}>
               <Pencil className="h-4 w-4" />
             </Link>
           </Button>
 
-          <Button size="icon" variant="destructive">
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteGearButton id={gear.id} />
         </div>
       </TableCell>
     </TableRow>
