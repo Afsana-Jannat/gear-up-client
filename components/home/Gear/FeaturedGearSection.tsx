@@ -58,7 +58,7 @@ export default async function FeaturedGearSection() {
   if (!gears.length) return null;
 
   return (
-    <section className="relative overflow-hidden bg-white py-28">
+    <section className="relative overflow-hidden bg-white py-16">
       {/* Background */}
 
       <div className="absolute -left-44 top-0 h-[420px] w-[420px] rounded-full bg-neutral-100 blur-3xl opacity-70" />

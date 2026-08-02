@@ -50,7 +50,7 @@ export async function CategoriesSection() {
   if (!categories.length) return null;
 
   return (
-    <section className="relative overflow-hidden bg-white py-24">
+    <section className="relative overflow-hidden bg-white py-18 px-8">
       {/* Background Blur */}
       <div className="absolute -left-40 top-0 h-96 w-96 rounded-full bg-neutral-100 blur-3xl opacity-60" />
 
