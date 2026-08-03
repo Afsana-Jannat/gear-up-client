@@ -18,7 +18,7 @@ export async function getCategories(): Promise<Category[]> {
 
     const response = await fetch(`${baseUrl}/api/categories`, {
       next: {
-        revalidate: 0,
+        revalidate: 3600,
       },
     });
 
