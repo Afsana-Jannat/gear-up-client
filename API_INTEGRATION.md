@@ -7,7 +7,7 @@ GearUp - Sports & Outdoor Gear Rental Platform (Frontend)
 **Frontend:** Next.js 16 + TypeScript + Tailwind CSS
 
 **Backend API:**
-https://your-backend-url.com
+https://gear-up-vlxn.onrender.com
 
 ---
 
