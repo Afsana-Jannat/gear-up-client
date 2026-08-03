@@ -20,7 +20,7 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <section className="py-6">
+    <section className="py-16">
       <div
         className="
         mx-auto
