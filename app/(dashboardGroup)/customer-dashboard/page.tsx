@@ -6,6 +6,8 @@ import { ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import RecentRentals from '@/components/dashboard/overview/RecentRentals';
 
+import { getCustomerOverview } from '@/service/customer/getDashboardOverview';
+
 function ActionCard({
   title,
   description,
@@ -43,44 +45,64 @@ function ActionCard({
   );
 }
 
-export default function CustomerDashboardPage() {
+export default async function CustomerDashboardPage() {
+  const overview = await getCustomerOverview();
   return (
     <div className="space-y-8">
       {/* Welcome */}
-      <section>
-        <h2 className="text-2xl font-black md:text-4xl">Welcome Back 👋</h2>
+      <section
+        className="
+    flex
+    flex-col
+    gap-5
+    rounded-3xl
+    border
+    bg-background
+    p-6
+    lg:flex-row
+    lg:items-center
+    lg:justify-between
+  "
+      >
+        <div>
+          <h1 className="text-3xl font-black md:text-4xl">Welcome Back 👋</h1>
 
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground md:text-base">
-          Here's an overview of your rentals and payments.
-        </p>
+          <p className="mt-2 max-w-xl text-muted-foreground">
+            Manage your rentals, payments and reviews from one place.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border px-5 py-3 text-sm font-semibold">
+          🚀 Happy Renting
+        </div>
       </section>
 
       {/* Stats */}
       <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <StatsCard
           title="Total Rentals"
-          value={18}
+          value={overview.totalRentals}
           subtitle="All rental orders"
           icon={Package}
         />
 
         <StatsCard
           title="Active Rentals"
-          value={4}
+          value={overview.activeRentals}
           subtitle="Currently rented"
           icon={CalendarCheck}
         />
 
         <StatsCard
           title="Completed"
-          value={14}
+          value={overview.completedRentals}
           subtitle="Returned successfully"
           icon={BadgeDollarSign}
         />
 
         <StatsCard
           title="Total Spent"
-          value="৳32,500"
+          value={`৳${overview.totalSpent.toLocaleString()}`}
           subtitle="Lifetime spending"
           icon={Wallet}
         />
@@ -117,7 +139,7 @@ export default function CustomerDashboardPage() {
         </div>
       </section>
 
-      <RecentRentals></RecentRentals>
+      <RecentRentals rentals={overview.rentals.slice(0, 5)} />
     </div>
   );
 }

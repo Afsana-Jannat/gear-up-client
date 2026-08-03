@@ -15,86 +15,171 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 
-const rentals = [
-  {
-    id: '1',
-    gear: 'Mountain Bike',
-    start: '12 Jul',
-    end: '16 Jul',
-    amount: '৳2,500',
-    status: 'ACTIVE',
-  },
-  {
-    id: '2',
-    gear: 'Camping Tent',
-    start: '04 Jul',
-    end: '08 Jul',
-    amount: '৳1,800',
-    status: 'COMPLETED',
-  },
-  {
-    id: '3',
-    gear: 'DSLR Camera',
-    start: '22 Jun',
-    end: '25 Jun',
-    amount: '৳3,400',
-    status: 'COMPLETED',
-  },
-];
+import { Rental } from '@/types/rental';
 
-export default function RecentRentals() {
+type Props = {
+  rentals: Rental[];
+};
+
+export default function RecentRentals({ rentals }: Props) {
   return (
-    <Card className="rounded-3xl p-6">
-      <div className="mb-6 flex items-center justify-between">
+    <Card className="overflow-hidden rounded-3xl">
+      <div className="flex flex-col gap-4 border-b p-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-xl font-bold">Recent Rentals</h3>
+          <h3 className="text-2xl font-bold">Recent Rentals</h3>
 
-          <p className="text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-muted-foreground">
             Your latest rental activity
           </p>
         </div>
 
         <Link
           href="/customer-dashboard/rentals"
-          className="flex items-center gap-2 text-sm font-semibold text-primary"
+          className="inline-flex items-center gap-2 font-medium text-primary transition hover:gap-3"
         >
           View All
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Gear</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
+      {/* Desktop */}
+      <div className="hidden overflow-x-auto lg:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Gear</TableHead>
 
-        <TableBody>
-          {rentals.map((rental) => (
-            <TableRow key={rental.id}>
-              <TableCell className="font-medium">{rental.gear}</TableCell>
+              <TableHead>Rental Period</TableHead>
 
-              <TableCell>
-                {rental.start} - {rental.end}
-              </TableCell>
+              <TableHead>Total</TableHead>
 
-              <TableCell>{rental.amount}</TableCell>
-
-              <TableCell>
-                <Badge
-                  variant={rental.status === 'ACTIVE' ? 'default' : 'secondary'}
-                >
-                  {rental.status}
-                </Badge>
-              </TableCell>
+              <TableHead>Status</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody>
+            {rentals.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={4}
+                  className="py-12 text-center text-muted-foreground"
+                >
+                  No rentals found.
+                </TableCell>
+              </TableRow>
+            ) : (
+              rentals.map((rental) => (
+                <TableRow key={rental.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={
+                          rental.gear.image ||
+                          'https://placehold.co/80x80?text=Gear'
+                        }
+                        alt={rental.gear.name}
+                        className="h-14 w-14 rounded-xl border object-cover"
+                      />
+
+                      <div>
+                        <p className="font-semibold">{rental.gear.name}</p>
+
+                        <p className="text-xs text-muted-foreground">
+                          {rental.gear.brand}
+                        </p>
+                      </div>
+                    </div>
+                  </TableCell>
+
+                  <TableCell>
+                    <div className="text-sm">
+                      <p>{new Date(rental.startDate).toLocaleDateString()}</p>
+
+                      <p className="text-muted-foreground">
+                        {new Date(rental.endDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </TableCell>
+
+                  <TableCell className="font-semibold">
+                    ৳{Number(rental.totalAmount).toLocaleString()}
+                  </TableCell>
+
+                  <TableCell>
+                    <Badge
+                      variant={
+                        rental.status === 'RETURNED'
+                          ? 'default'
+                          : rental.status === 'CANCELLED'
+                            ? 'destructive'
+                            : 'secondary'
+                      }
+                    >
+                      {rental.status.replace('_', ' ')}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Mobile */}
+      <div className="space-y-4 p-5 lg:hidden">
+        {rentals.length === 0 ? (
+          <div className="py-10 text-center text-muted-foreground">
+            No rentals found.
+          </div>
+        ) : (
+          rentals.map((rental) => (
+            <div
+              key={rental.id}
+              className="rounded-2xl border p-4 transition hover:shadow-md"
+            >
+              <div className="flex gap-4">
+                <img
+                  src={
+                    rental.gear.image || 'https://placehold.co/80x80?text=Gear'
+                  }
+                  alt={rental.gear.name}
+                  className="h-16 w-16 rounded-xl border object-cover"
+                />
+
+                <div className="flex-1">
+                  <h4 className="font-bold">{rental.gear.name}</h4>
+
+                  <p className="text-xs text-muted-foreground">
+                    {rental.gear.brand}
+                  </p>
+
+                  <p className="mt-2 text-sm">
+                    ৳{Number(rental.totalAmount).toLocaleString()}
+                  </p>
+
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {new Date(rental.startDate).toLocaleDateString()} -{' '}
+                    {new Date(rental.endDate).toLocaleDateString()}
+                  </p>
+
+                  <Badge
+                    className="mt-3"
+                    variant={
+                      rental.status === 'RETURNED'
+                        ? 'default'
+                        : rental.status === 'CANCELLED'
+                          ? 'destructive'
+                          : 'secondary'
+                    }
+                  >
+                    {rental.status.replace('_', ' ')}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </Card>
   );
 }
