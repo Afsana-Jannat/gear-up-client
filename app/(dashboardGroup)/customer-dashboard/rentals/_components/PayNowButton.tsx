@@ -29,8 +29,15 @@ export default function PayNowButton({ rentalOrderId }: Props) {
   };
 
   return (
-    <Button onClick={handlePayment} disabled={pending}>
-      <CreditCard className="mr-2 h-4 w-4" />
+    <Button
+      onClick={handlePayment}
+      disabled={pending}
+      className="     w-full
+    justify-center
+    sm:w-auto
+    sm:min-w-[170px]"
+    >
+      <CreditCard className="mr-2 h-4 w-4 shrink-0" />
 
       {pending ? 'Redirecting...' : 'Pay Now'}
     </Button>

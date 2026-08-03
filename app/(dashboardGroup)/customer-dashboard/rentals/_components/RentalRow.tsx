@@ -141,16 +141,24 @@ export default function RentalRow({ rental }: Props) {
       "
     >
       {/* Left */}
-      <div className="flex gap-5">
+      <div className="flex flex-col gap-5 sm:flex-row">
         <img
           src={rental.gear.image}
           alt={rental.gear.name}
-          className="h-28 w-28 rounded-2xl border object-cover"
+          className="
+h-24
+w-24
+rounded-2xl
+border
+object-cover
+sm:h-28
+sm:w-28
+"
         />
 
         <div className="space-y-3">
           <div>
-            <h3 className="text-xl font-bold">{rental.gear.name}</h3>
+            <h3 className="text-lg font-bold sm:text-xl">{rental.gear.name}</h3>
 
             <p className="text-sm text-muted-foreground">{rental.gear.brand}</p>
           </div>
@@ -158,7 +166,7 @@ export default function RentalRow({ rental }: Props) {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <CalendarDays size={16} />
 
-            <span>
+            <span className="break-words">
               {new Date(rental.startDate).toLocaleDateString()} -{' '}
               {new Date(rental.endDate).toLocaleDateString()}
             </span>
@@ -186,16 +194,34 @@ export default function RentalRow({ rental }: Props) {
       </div>
 
       {/* Right */}
-      <div className="flex flex-col items-start gap-4 lg:items-end">
+      <div
+        className="
+    flex
+    w-full
+    flex-col
+    gap-4
+    border-t
+    pt-5
+    lg:w-auto
+    lg:border-0
+    lg:pt-0
+    lg:items-end
+  "
+      >
+        {' '}
         <div>
           <p className="text-sm text-muted-foreground">Total Amount</p>
 
-          <h2 className="text-3xl font-black text-primary">
+          <h2 className="text-2xl font-black sm:text-3xl">
+            {' '}
             ৳{Number(rental.totalAmount).toLocaleString()}
           </h2>
         </div>
-
-        {canPay && <PayNowButton rentalOrderId={rental.id} />}
+        {canPay && (
+          <div className="w-full lg:w-auto">
+            <PayNowButton rentalOrderId={rental.id} />
+          </div>
+        )}
       </div>
     </div>
   );

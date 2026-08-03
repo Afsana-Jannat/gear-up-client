@@ -58,7 +58,7 @@ export default async function CustomerDashboardPage() {
     rounded-3xl
     border
     bg-background
-    p-6
+    p-4
     lg:flex-row
     lg:items-center
     lg:justify-between

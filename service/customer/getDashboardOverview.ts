@@ -1,13 +1,13 @@
-// service/customer/getDashboardOverview.ts
-
 import { getMyPayments } from '../payment/getMyPayments';
 import { getMyRentals } from '../rental/getMyRentals';
 
 export async function getCustomerOverview() {
-  const [rentals, payments] = await Promise.all([
+  const [rentalRes, payments] = await Promise.all([
     getMyRentals(),
     getMyPayments(),
   ]);
+
+  const rentals = rentalRes.data ?? [];
 
   const totalRentals = rentals.length;
 
@@ -20,8 +20,8 @@ export async function getCustomerOverview() {
   ).length;
 
   const totalSpent = payments
-    .filter((p: any) => p.status === 'COMPLETED')
-    .reduce((sum: number, p: any) => sum + Number(p.amount), 0);
+    .filter((p) => p.status === 'COMPLETED')
+    .reduce((sum, p) => sum + Number(p.amount), 0);
 
   return {
     rentals,
