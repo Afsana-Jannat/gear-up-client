@@ -5,7 +5,7 @@ export interface Gear {
   description: string;
   pricePerDay: string;
   stock: number;
-  availability: 'AVAILABLE' | 'UNAVAILABLE';
+  availability: 'AVAILABLE' | 'OUT_OF_STOCK';
   image: string;
 
   category: {

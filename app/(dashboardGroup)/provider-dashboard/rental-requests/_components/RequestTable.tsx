@@ -141,31 +141,37 @@ export default function RentalRequestTable({ rentals }: Props) {
 
                 <TableCell>
                   <Select
-                    defaultValue={rental.status}
                     onValueChange={(value) =>
                       handleStatusChange(
                         rental.id,
                         value as RentalRequest['status']
                       )
                     }
-                    disabled={pending}
+                    disabled={
+                      pending ||
+                      rental.status === 'RETURNED' ||
+                      rental.status === 'CANCELLED'
+                    }
                   >
                     <SelectTrigger>
-                      <SelectValue />
+                      <SelectValue placeholder="Update Status" />
                     </SelectTrigger>
 
                     <SelectContent>
-                      <SelectItem value="PLACED">PLACED</SelectItem>
+                      {rental.status === 'PLACED' && (
+                        <>
+                          <SelectItem value="CONFIRMED">Confirm</SelectItem>
+                          <SelectItem value="CANCELLED">Cancel</SelectItem>
+                        </>
+                      )}
 
-                      <SelectItem value="CONFIRMED">CONFIRMED</SelectItem>
+                      {rental.status === 'PAID' && (
+                        <SelectItem value="PICKED_UP">Picked Up</SelectItem>
+                      )}
 
-                      <SelectItem value="PAID">PAID</SelectItem>
-
-                      <SelectItem value="PICKED_UP">PICKED UP</SelectItem>
-
-                      <SelectItem value="RETURNED">RETURNED</SelectItem>
-
-                      <SelectItem value="CANCELLED">CANCELLED</SelectItem>
+                      {rental.status === 'PICKED_UP' && (
+                        <SelectItem value="RETURNED">Returned</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                 </TableCell>
