@@ -34,7 +34,7 @@ export default function PayNowButton({ rentalOrderId }: Props) {
       disabled={pending}
       className="     w-full
     justify-center
-    sm:w-auto
+    sm:w-[auto]
     sm:min-w-[170px]"
     >
       <CreditCard className="mr-2 h-4 w-4 shrink-0" />
