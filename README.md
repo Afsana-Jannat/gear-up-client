@@ -1,5 +1,3 @@
-<div align="center">
-
 # 🏕️ GearUp
 
 ### Rent Sports & Outdoor Gear Instantly
@@ -266,11 +264,3 @@ customer@gmail.com
 Password
 
 12345678
-
-Made with using Next.js & TypeScript
-
-### Afsana Jannat
-
-BSc in Software Engineering
-
-Daffodil International University
