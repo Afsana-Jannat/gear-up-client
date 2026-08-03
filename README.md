@@ -28,6 +28,14 @@ https://github.com/Afsana-Jannat/gear-up-client
 Backend Repository
 https://github.com/Afsana-Jannat/gear-up
 
+## 🔑 Demo Credentials
+
+| Role            | Email                | Password   |
+| --------------- | -------------------- | ---------- |
+| 👑 **Admin**    | `rojoni@gmail.com`   | `12345678` |
+| 🛒 **Provider** | `provider@gmail.com` | `12345678` |
+| 👤 **Customer** | `customer@gmail.com` | `12345678` |
+
 ---
 
 # 📖 Overview
@@ -218,49 +226,3 @@ npm run dev
 ```
 
 ---
-
-# 👨‍💻 Demo Credentials
-
-## Admin
-
-Email:
-
-```
-admin@gmail.com
-```
-
-Password
-
-```
-12345678
-```
-
----
-
-## Provider
-
-Email
-
-```
-provider@gmail.com
-```
-
-Password
-
-```
-12345678
-```
-
----
-
-## Customer
-
-Email
-
-```
-customer@gmail.com
-```
-
-Password
-
-12345678
